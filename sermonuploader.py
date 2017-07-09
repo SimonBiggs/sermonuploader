@@ -48,10 +48,14 @@ def initial_prompt():
         text="Please provide the directory where sermons will be placed:")
     label_intro.grid(row=0, column=0, columnspan=4, padx=10, pady=(10,5))
 
+    data_directory = "data"
+    if not os.path.exists(data_directory):
+        os.mkdir(data_directory)
     persistent_filenames = {
-       "directory": "directory_to_watch.txt",
-       "archiveorg": "archiveorg_username.txt",
-       "wordpress": "wordpress_username.txt"
+       "directory": os.path.join("data", "directory_to_watch.txt"),
+       "archiveorg": os.path.join("data", "archiveorg_username.txt"),
+       "wordpress_user": os.path.join("data", "wordpress_username.txt"),
+       "wordpress_address": os.path.join("data", "wordpress_address.txt")
     }
 
     string_vars = {
@@ -62,7 +66,8 @@ def initial_prompt():
     widths = {
        "directory": 40,
        "archiveorg": 15,
-       "wordpress": 15
+       "wordpress_user": 15,
+       "wordpress_address": 15
     }
 
     persistent_entries = {
@@ -71,7 +76,7 @@ def initial_prompt():
     }
     persistent_entries['directory'].grid(row=1, column=0, columnspan=3, padx=20)
     persistent_entries['archiveorg'].grid(row=3, column=1, padx=10)
-    persistent_entries['wordpress'].grid(row=3, column=3, padx=10)
+    persistent_entries['wordpress_user'].grid(row=3, column=3, padx=10)
 
     button_browse = tk.Button(root, text="Browse", command= lambda: browsefunc(string_vars['directory']))
     button_browse.grid(row=1, column=3)
