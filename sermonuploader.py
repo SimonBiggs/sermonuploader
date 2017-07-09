@@ -67,37 +67,42 @@ def initial_prompt():
        "directory": 40,
        "archiveorg": 15,
        "wordpress_user": 15,
-       "wordpress_address": 15
+       "wordpress_address": 25
     }
 
     persistent_entries = {
         key: tk.Entry(root, textvariable=item, width=widths[key])
         for key, item in string_vars.items()
     }
-    persistent_entries['directory'].grid(row=1, column=0, columnspan=3, padx=20)
-    persistent_entries['archiveorg'].grid(row=3, column=1, padx=10)
-    persistent_entries['wordpress_user'].grid(row=3, column=3, padx=10)
+    persistent_entries['directory'].grid(row=1, column=0, columnspan=4, padx=5, sticky=tk.E)
+    persistent_entries['archiveorg'].grid(row=3, column=1, padx=10, sticky=tk.W)
+    persistent_entries['wordpress_address'].grid(row=3, column=3, padx=10, columnspan=2, sticky=tk.W)
+    persistent_entries['wordpress_user'].grid(row=4, column=3, padx=10, columnspan=2, sticky=tk.W)
 
-    button_browse = tk.Button(root, text="Browse", command= lambda: browsefunc(string_vars['directory']))
-    button_browse.grid(row=1, column=3)
+    button_browse = tk.Button(
+        root, text="Browse", command= lambda: browsefunc(string_vars['directory']))
+    button_browse.grid(row=1, column=4, sticky=tk.W)
 
     label_details = [
         tk.Label(root, text="Please provide {} details:".format(item))
         for item in ["archive.org", "wordpress"]]
     label_details[0].grid(row=2, column=0, columnspan=2, pady=10)
-    label_details[1].grid(row=2, column=2, columnspan=2, pady=10)
+    label_details[1].grid(row=2, column=2, columnspan=3, pady=10)
 
     label_username = [
         tk.Label(root, text="Username:")
         for _ in range(2)]
-    label_username[0].grid(row=3, column=0)
-    label_username[1].grid(row=3, column=2)
+    label_username[0].grid(row=3, column=0, sticky=tk.E)
+    label_username[1].grid(row=4, column=2, sticky=tk.E)
 
     label_password = [
         tk.Label(root, text="Password:")
         for _ in range(2)]
-    label_password[0].grid(row=4, column=0)
-    label_password[1].grid(row=4, column=2)
+    label_password[0].grid(row=4, column=0, sticky=tk.E)
+    label_password[1].grid(row=5, column=2, sticky=tk.E)
+
+    label_address = tk.Label(root, text="Address:")
+    label_address.grid(row=3, column=2, sticky=tk.E)
 
     def complete(event=None):
         for key, filename in persistent_filenames.items():
@@ -107,8 +112,8 @@ def initial_prompt():
         
         root.destroy()
 
-    button = tk.Button(root, text="Begin watching", command=complete)
-    button.grid(row=7, column=3)
+    button_complete = tk.Button(root, text="Begin watching", command=complete)
+    button_complete.grid(row=7, column=4, sticky=tk.E)
 
     persistent_entries['directory'].focus()
     
